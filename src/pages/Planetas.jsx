@@ -3,18 +3,18 @@ import { GetPlanetas } from '../services/fetch'
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 
 function Planetas() {
+
   const { store, dispatch } = useGlobalReducer();
+ const { planetas } = store
 
   useEffect(() => {
     GetPlanetas(dispatch) 
   }, [dispatch])
   
-  console.log(store.planetas); 
+  console.log(planetas); 
 
   return (
-    <div>
-      <Planetas />
-    </div>
+    <div>Planetas</div>
   )
 }
 
