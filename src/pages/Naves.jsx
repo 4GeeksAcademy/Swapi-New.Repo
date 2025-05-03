@@ -15,7 +15,7 @@ function Naves () {
   console.log(naves); 
 
   return (
-    <div>Planetas</div>
+    <div>Naves</div>
   )
 }
 

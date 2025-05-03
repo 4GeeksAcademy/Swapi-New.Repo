@@ -13,6 +13,30 @@ export const GetPersonajes = async (dispatch) => {
   }
 };
 
+export const GetPersonajeByUid = async (dispatch, uid) => {
+  dispatch({ type: 'LOADING_DETALLE_PERSONAJE' });
+  try {
+    const response = await fetch(`${base_Url}/people/${uid}`);  
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }  
+    const data = await response.json();
+    if (!data.result) {
+      throw new Error('Invalid data structure from API');
+    }  
+    dispatch({ type: 'SET_PERSONAJE_DETALLE', payload: data });
+  } catch (error) {
+    console.error('Error fetching character:', error);
+    dispatch({ 
+      type: 'ERROR_DETALLE_PERSONAJE', 
+      payload: { 
+        message: error.message || 'Failed to load character details' 
+      } 
+    });
+  }
+};
+//---------------------------------------------------------
+
 export const GetPlanetas = async (dispatch) => {
   try {
     dispatch({ type: "GET_PLANETAS_LOADING" });
