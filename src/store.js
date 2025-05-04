@@ -3,14 +3,17 @@ export const initialStore = () => ({
   planetas: [],
   naves: [],
   personajeDetalle: null,
+  naveDetalle: null,
   loadingPersonajes: false,
   loadingPlanetas: false,
   loadingNaves: false,
-  loadingDetalle: false,
+  loadingDetallePersonaje: false,
+  loadingDetalleNave: false,
   errorPersonajes: null,
   errorPlanetas: null,
   errorNaves: null,
-  errorDetalle: null
+  errorDetallePersonaje: null,
+  errorDetalleNave: null
 });
 
 export default function storeReducer(store, action = {}) {
@@ -23,11 +26,11 @@ export default function storeReducer(store, action = {}) {
       return { ...store, errorPersonajes: action.payload, loadingPersonajes: false };
       
     case 'LOADING_DETALLE_PERSONAJE':
-      return { ...store, loadingDetalle: true, errorDetalle: null };
+      return { ...store, loadingDetallePersonaje: true, errorDetallePersonaje: null };
     case 'SET_PERSONAJE_DETALLE':
-      return { ...store, personajeDetalle: action.payload, loadingDetalle: false };
+      return { ...store, personajeDetalle: action.payload, loadingDetallePersonaje: false };
     case 'ERROR_DETALLE_PERSONAJE':
-      return { ...store, errorDetalle: action.payload, loadingDetalle: false };
+      return { ...store, errorDetallePersonaje: action.payload, loadingDetallePersonaje: false };
       
     case 'GET_PLANETAS_LOADING':
       return { ...store, loadingPlanetas: true, errorPlanetas: null };
@@ -41,7 +44,14 @@ export default function storeReducer(store, action = {}) {
     case 'GET_NAVES_SUCCESS':
       return { ...store, naves: action.payload, loadingNaves: false };
     case 'GET_NAVES_ERROR':
-      return { ...store, errorNaves: action.payload, loadingNaves: false }; 
+      return { ...store, errorNaves: action.payload, loadingNaves: false };
+
+    case 'LOADING_DETALLE_NAVE':
+      return { ...store, loadingDetalleNave: true, errorDetalleNave: null };
+    case 'SET_NAVE_DETALLE':
+      return { ...store, naveDetalle: action.payload, loadingDetalleNave: false };
+    case 'ERROR_DETALLE_NAVE':
+      return { ...store, errorDetalleNave: action.payload, loadingDetalleNave: false };
       
     default:
       return store;
