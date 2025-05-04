@@ -1,23 +1,31 @@
-import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
-import Personajes from "./Personajes.jsx";
-import Planetas from "./Planetas.jsx";
-import Naves from "./Naves.jsx";
-import FavoritosList from "../components/FavoritosList.jsx";
-
+import { Link } from "react-router-dom";
 
 
 export const Home = () => {
+  return (
+    <div className="databank-container">
+      <div className="databank-header">
+        <div className="divider"></div>
+      </div>
 
-  const {store, dispatch} =useGlobalReducer()
+      <div className="databank-categories">
+        <h2>BROWSE</h2>
+        <div className="category-grid">
+          <Link to="/personajes" className="category-card">
+            <span className="category-code">CHARACTERS</span>
+          </Link>
+          <Link to="/planetas" className="category-card">
+            <span className="category-code">PLANETS</span>
+          </Link>
+          <Link to="/naves" className="category-card">
+            <span className="category-code">VEHICLES</span>
+          </Link>
+          <Link to="/favorites" className="category-card">
+            <span className="category-code">FAVORITES</span>
+          </Link>
+        </div>
+      </div>
 
-	return (
-		<div className="text-center mt-5">
-			
-		<div><Personajes /></div>
-		<div><Planetas /></div>
-		<div><Naves /></div>	
-		<div><FavoritosList /></div>
-		</div>
-		
-	);
-}; 
+    </div>
+  );
+};
