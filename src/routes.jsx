@@ -15,6 +15,7 @@ import Naves from "./pages/Naves";
 import DetallePersonajes from "./components/DetallePersonajes";
 import DetalleNaves from "./components/DetalleNaves";
 import DetallePlanetas from "./components/DetallePlanetas";
+import FavoritosList from "./components/FavoritosList";
 
 export const router = createBrowserRouter(
     createRoutesFromElements(
@@ -36,6 +37,7 @@ export const router = createBrowserRouter(
         <Route path="/planetas/:uid" element={<DetallePlanetas />} />
         <Route path="/naves" element={<Naves />} />
         <Route path="/naves/:uid" element={<DetalleNaves />} />
+        <Route path="/favorites" element={<FavoritosList />} />
         <Route path="/demo" element={<Demo />} />
       </Route>
     )

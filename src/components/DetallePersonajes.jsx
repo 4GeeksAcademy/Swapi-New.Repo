@@ -22,15 +22,17 @@ function DetallePersonajes() {
 
   const characterData = personajeDetalle.result?.properties || {};
   
-  const esFavorito = favoritos?.some(fav => 
+  const esFavorito = favoritos.some(fav => 
     fav.uid === personajeDetalle.uid && 
-    fav.type === 'personaje'
+    fav.type === 'personaje' &&
+    fav.name === characterData.name
   );
 
   const handleToggleFavorito = () => {
     dispatch(toggleFavorito({
       uid: personajeDetalle.uid,
       type: 'personaje',
+      name: characterData.name,
       ...characterData
     }));
   };

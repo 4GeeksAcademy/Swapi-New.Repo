@@ -23,7 +23,7 @@ function Planetas() {
 
 if (loading) return <div>Loading planets...</div>;
 if (error) return <div>Error: {error.message}</div>;
-if (!planetas || planetas.length === 0) return <div>This Planet Has Been Destroyed!</div>
+if (!planetas || planetas.length === 0) return <div>The Galaxy Has Been Destroyed!</div>
 
 return(
   <div>

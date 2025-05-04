@@ -21,13 +21,18 @@ function DetallePlanetas() {
     if (!planetaDetalle) return <div>No planet data available</div>;
 
     const planetData = planetaDetalle.result?.properties || {};
-    const esFavorito = favoritos?.some(fav => fav.uid === planetaDetalle.uid);
+    const esFavorito = favoritos.some(fav => 
+        fav.uid === planetaDetalle.uid && 
+        fav.type === 'planeta' &&
+        fav.name === planetData.name
+    );
 
     const handleToggleFavorito = () => {
         dispatch(toggleFavorito({
             uid: planetaDetalle.uid,
-            ...planetData,
-            type: 'planeta'
+            type: 'planeta',
+            name: planetData.name,
+            ...planetData
         }));
     };
 
@@ -43,7 +48,7 @@ function DetallePlanetas() {
                 onClick={handleToggleFavorito}
                 className={`favorite-button ${esFavorito ? 'active' : ''}`}
             >
-                {esFavorito ? '❤️ Remove Favorite' : '♡ Add Favorite'}
+                {esFavorito ? '❤️' : '♡'}
             </button>
 
             <div className="planet-properties">

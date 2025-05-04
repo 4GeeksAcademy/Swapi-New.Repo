@@ -6,7 +6,7 @@ export const GetPersonajes = async (dispatch) => {
     const response = await fetch(`${base_Url}people`);
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     const data = await response.json();
-    if (!data?.results) throw new Error("Formato de datos inesperado");
+    if (!data?.results) throw new Error("Unexpected data format");
     dispatch({ type: "GET_PERSONAJES_SUCCESS", payload: data.results });
   } catch (error) {
     dispatch({ type: "GET_PERSONAJES_ERROR", payload: error.message });
@@ -22,7 +22,7 @@ export const GetPersonajeByUid = async (dispatch, uid) => {
     }  
     const data = await response.json();
     if (!data.result) {
-      throw new Error('Invalid data structure from API');
+      throw new Error('Unexpected data format');
     }  
     dispatch({ type: 'SET_PERSONAJE_DETALLE', payload: data });
   } catch (error) {
@@ -43,7 +43,7 @@ export const GetPlanetas = async (dispatch) => {
     const response = await fetch(`${base_Url}planets`);
     if (!response.ok) throw new Error(`HTTP error! status ${response.status}`);
     const data = await response.json();
-    if (!data.results) throw new Error("Formato de datos inesperado");
+    if (!data.results) throw new Error("Unexpected data format");
     dispatch({ type: "GET_PLANETAS_SUCCESS", payload: data.results });
   } catch (error) {
     dispatch({ type: "GET_PLANETAS_ERROR", payload: error.message });
@@ -59,7 +59,7 @@ export const GetPlanetaByUid = async (dispatch, uid) => {
     }  
     const data = await response.json();
     if (!data.result) {
-      throw new Error('Invalid data structure from API');
+      throw new Error('Unexpected data format');
     }  
     dispatch({ type: 'SET_PLANETA_DETALLE', payload: data });
   } catch (error) {
@@ -79,7 +79,7 @@ export const GetNaves = async (dispatch) => {
     const response = await fetch(`${base_Url}starships`);
     if (!response.ok) throw new Error (`HTTP error! status ${response.status}`);
     const data = await response.json();
-    if (!data.results) throw new Error ("Formato de datos inesperado");
+    if (!data.results) throw new Error ("Unexpected data format");
     dispatch({ type: "GET_NAVES_SUCCESS", payload: data.results });
   } catch (error) {
     dispatch({ type: "GET_NAVES_ERROR", payload: error.message });
@@ -95,7 +95,7 @@ export const GetNaveByUid = async (dispatch, uid) => {
     }  
     const data = await response.json();
     if (!data.result) {
-      throw new Error('Invalid data structure from API');
+      throw new Error('Unexpected data format');
     }  
     dispatch({ type: 'SET_NAVE_DETALLE', payload: data });
   } catch (error) {
