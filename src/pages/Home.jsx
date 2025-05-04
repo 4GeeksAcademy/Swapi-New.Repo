@@ -1,5 +1,3 @@
-import rigoImageUrl from "../assets/img/rigo-baby.jpg";
-import DetallePersonajes from "../components/DetallePersonajes.jsx";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import Personajes from "./Personajes.jsx";
 import Planetas from "./Planetas.jsx";

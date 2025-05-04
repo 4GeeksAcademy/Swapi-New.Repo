@@ -2,12 +2,13 @@ import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { GetPlanetaByUid } from '../services/fetch';
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
+import { toggleFavorito } from '../hooks/actions.js';
 
 function DetallePlanetas() {
     const { uid } = useParams();
     const navigate = useNavigate();
     const { store, dispatch } = useGlobalReducer();
-    const { planetaDetalle, loadingDetalle, errorDetalle } = store;
+    const { planetaDetalle, loadingDetalle, errorDetalle, favoritos } = store;
 
     useEffect(() => {
         if (uid && uid !== "undefined") {
@@ -20,6 +21,15 @@ function DetallePlanetas() {
     if (!planetaDetalle) return <div>No planet data available</div>;
 
     const planetData = planetaDetalle.result?.properties || {};
+    const esFavorito = favoritos?.some(fav => fav.uid === planetaDetalle.uid);
+
+    const handleToggleFavorito = () => {
+        dispatch(toggleFavorito({
+            uid: planetaDetalle.uid,
+            ...planetData,
+            type: 'planeta'
+        }));
+    };
 
     return (
         <div className="character-detail">
@@ -28,6 +38,13 @@ function DetallePlanetas() {
             </button>
 
             <h1>{planetData.name || 'Unknown Planet'}</h1>
+
+            <button
+                onClick={handleToggleFavorito}
+                className={`favorite-button ${esFavorito ? 'active' : ''}`}
+            >
+                {esFavorito ? '❤️ Remove Favorite' : '♡ Add Favorite'}
+            </button>
 
             <div className="planet-properties">
                 <p><strong>Climate:</strong> {planetData.climate}</p>

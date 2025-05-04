@@ -2,12 +2,13 @@ import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { GetPersonajeByUid } from '../services/fetch';
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
+import { toggleFavorito } from '../hooks/actions.js';
 
 function DetallePersonajes() {
   const { uid } = useParams();
   const navigate = useNavigate();
   const { store, dispatch } = useGlobalReducer();
-  const { personajeDetalle, loadingDetalle, errorDetalle } = store;
+  const { personajeDetalle, loadingDetalle, errorDetalle, favoritos } = store;
 
   useEffect(() => {
     if (uid && uid !== "undefined") {
@@ -20,15 +21,36 @@ function DetallePersonajes() {
   if (!personajeDetalle) return <div>No character data available</div>;
 
   const characterData = personajeDetalle.result?.properties || {};
+  
+  const esFavorito = favoritos?.some(fav => 
+    fav.uid === personajeDetalle.uid && 
+    fav.type === 'personaje'
+  );
+
+  const handleToggleFavorito = () => {
+    dispatch(toggleFavorito({
+      uid: personajeDetalle.uid,
+      type: 'personaje',
+      ...characterData
+    }));
+  };
 
   return (
     <div className="character-detail">
       <button onClick={() => navigate(-1)} className="back-button">
         ← Back to list
       </button>
-      
+
       <h1>{characterData.name || 'Unknown Character'}</h1>
-      
+
+      <button 
+        onClick={handleToggleFavorito}
+        className={`favorite-btn ${esFavorito ? 'active' : ''}`}
+        aria-label={esFavorito ? 'Quitar de favoritos' : 'Añadir a favoritos'}
+      >
+        {esFavorito ? '❤️' : '♡'}
+      </button>
+
       <div className="character-properties">
         <p><strong>Height:</strong> {characterData.height} cm</p>
         <p><strong>Mass:</strong> {characterData.mass} kg</p>

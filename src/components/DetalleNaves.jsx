@@ -2,12 +2,13 @@ import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { GetNaveByUid } from '../services/fetch';
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
+import { toggleFavorito } from '../hooks/actions.js';
 
 function DetalleNaves() {
   const { uid } = useParams();
   const navigate = useNavigate();
   const { store, dispatch } = useGlobalReducer();
-  const { naveDetalle, loadingDetalleNave, errorDetalleNave } = store;
+  const { naveDetalle, loadingDetalleNave, errorDetalleNave, favoritos } = store;
 
   useEffect(() => {
     if (uid && uid !== "undefined") {
@@ -20,6 +21,16 @@ function DetalleNaves() {
   if (!naveDetalle || !naveDetalle.result) return <div>No starship data available</div>;
 
   const properties = naveDetalle.result.properties;
+  const esFavorito = favoritos?.some(fav => fav.uid === naveDetalle.uid);
+
+      const handleToggleFavorito = () => {
+          dispatch(toggleFavorito({
+              uid: naveDetalle.uid,
+              ...starshipData,
+              type: 'nave'
+          }));
+      };
+
 
   return (
     <div>
@@ -28,6 +39,13 @@ function DetalleNaves() {
       </button>
       
       <h1>{properties.name || 'Unknown starship'}</h1>
+
+      <button
+                onClick={handleToggleFavorito}
+                className={`favorite-button ${esFavorito ? 'active' : ''}`}
+            >
+                {esFavorito ? '❤️ Remove Favorite' : '♡ Add Favorite'}
+            </button>
       
       <div>
         <p><strong>Model:</strong> {properties.model}</p>

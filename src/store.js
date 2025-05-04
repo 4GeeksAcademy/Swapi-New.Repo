@@ -2,8 +2,10 @@ export const initialStore = () => ({
   personajes: [],
   planetas: [],
   naves: [],
+  favoritos: [],
   personajeDetalle: null,
   naveDetalle: null,
+  planetaDetalle: null,
   loadingPersonajes: false,
   loadingPlanetas: false,
   loadingNaves: false,
@@ -26,15 +28,15 @@ export default function storeReducer(store, action = {}) {
       return { ...store, personajes: action.payload, loadingPersonajes: false };
     case 'GET_PERSONAJES_ERROR':
       return { ...store, errorPersonajes: action.payload, loadingPersonajes: false };
-      
+
     case 'LOADING_DETALLE_PERSONAJE':
       return { ...store, loadingDetallePersonaje: true, errorDetallePersonaje: null };
     case 'SET_PERSONAJE_DETALLE':
       return { ...store, personajeDetalle: action.payload, loadingDetallePersonaje: false };
     case 'ERROR_DETALLE_PERSONAJE':
       return { ...store, errorDetallePersonaje: action.payload, loadingDetallePersonaje: false };
-    
-      //------------------------------------------------------------------
+
+    //------------------------------------------------------------------
 
     case 'GET_PLANETAS_LOADING':
       return { ...store, loadingPlanetas: true, errorPlanetas: null };
@@ -43,15 +45,14 @@ export default function storeReducer(store, action = {}) {
     case 'GET_PLANETAS_ERROR':
       return { ...store, errorPlanetas: action.payload, loadingPlanetas: false };
 
-      case 'LOADING_DETALLE_PLANETA':
-        return { ...store, loadingDetallePlaneta: true, errorDetallePlaneta: null };
-      case 'SET_PLANETA_DETALLE':
-        return { ...store, planetaDetalle: action.payload, loadingDetallePlaneta: false };
-      case 'ERROR_DETALLE_PLANETA':
-        return { ...store, errorDetallePlaneta: action.payload, loadingDetallePlaneta: false };
+    case 'LOADING_DETALLE_PLANETA':
+      return { ...store, loadingDetallePlaneta: true, errorDetallePlaneta: null };
+    case 'SET_PLANETA_DETALLE':
+      return { ...store, planetaDetalle: action.payload, loadingDetallePlaneta: false };
+    case 'ERROR_DETALLE_PLANETA':
+      return { ...store, errorDetallePlaneta: action.payload, loadingDetallePlaneta: false };
 
     //------------------------------------------------------------------  
-
 
     case 'GET_NAVES_LOADING':
       return { ...store, loadingNaves: true, errorNaves: null };
@@ -66,7 +67,34 @@ export default function storeReducer(store, action = {}) {
       return { ...store, naveDetalle: action.payload, loadingDetalleNave: false };
     case 'ERROR_DETALLE_NAVE':
       return { ...store, errorDetalleNave: action.payload, loadingDetalleNave: false };
-      
+
+    //------------------------------------------------------------------  
+
+    case 'ADD_FAVORITO':
+      return {
+        ...store,
+        favoritos: [...store.favoritos, action.payload],
+      };
+
+    case 'REMOVE_FAVORITO':
+      return {
+        ...store,
+        favoritos: store.favoritos.filter(item => item.uid !== action.payload),
+      };
+
+    case 'TOGGLE_FAVORITO':
+      const exists = store.favoritos.some(fav =>
+        fav.uid === action.payload.uid && fav.type === action.payload.type
+      );
+      return {
+        ...store,
+        favoritos: exists
+          ? store.favoritos.filter(fav =>
+            !(fav.uid === action.payload.uid && fav.type === action.payload.type)
+          )
+          : [...store.favoritos, action.payload]
+      };
+
     default:
       return store;
   }
