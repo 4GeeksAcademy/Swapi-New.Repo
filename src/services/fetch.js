@@ -49,6 +49,29 @@ export const GetPlanetas = async (dispatch) => {
     dispatch({ type: "GET_PLANETAS_ERROR", payload: error.message });
   }
 };
+
+export const GetPlanetaByUid = async (dispatch, uid) => {
+  dispatch({ type: 'LOADING_DETALLE_PLANETA' });
+  try {
+    const response = await fetch(`${base_Url}/planets/${uid}`);  
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }  
+    const data = await response.json();
+    if (!data.result) {
+      throw new Error('Invalid data structure from API');
+    }  
+    dispatch({ type: 'SET_PLANETA_DETALLE', payload: data });
+  } catch (error) {
+    console.error('Error fetching planet:', error);
+    dispatch({ 
+      type: 'ERROR_DETALLE_PLANETA', 
+      payload: { 
+        message: error.message || 'Failed to load planet details' 
+      } 
+    });
+  }
+};
 //---------------------------------------------------------
 export const GetNaves = async (dispatch) => {
   try{
@@ -61,7 +84,7 @@ export const GetNaves = async (dispatch) => {
   } catch (error) {
     dispatch({ type: "GET_NAVES_ERROR", payload: error.message });
   }
-}
+};
 
 export const GetNaveByUid = async (dispatch, uid) => {
   dispatch({ type: 'LOADING_DETALLE_NAVE' });

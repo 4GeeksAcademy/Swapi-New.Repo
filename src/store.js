@@ -9,11 +9,13 @@ export const initialStore = () => ({
   loadingNaves: false,
   loadingDetallePersonaje: false,
   loadingDetalleNave: false,
+  loadingDetallePlaneta: false,
   errorPersonajes: null,
-  errorPlanetas: null,
   errorNaves: null,
+  errorPlanetas: null,
   errorDetallePersonaje: null,
-  errorDetalleNave: null
+  errorDetalleNave: null,
+  errorDetallePlaneta: null
 });
 
 export default function storeReducer(store, action = {}) {
@@ -31,14 +33,26 @@ export default function storeReducer(store, action = {}) {
       return { ...store, personajeDetalle: action.payload, loadingDetallePersonaje: false };
     case 'ERROR_DETALLE_PERSONAJE':
       return { ...store, errorDetallePersonaje: action.payload, loadingDetallePersonaje: false };
-      
+    
+      //------------------------------------------------------------------
+
     case 'GET_PLANETAS_LOADING':
       return { ...store, loadingPlanetas: true, errorPlanetas: null };
     case 'GET_PLANETAS_SUCCESS':
       return { ...store, planetas: action.payload, loadingPlanetas: false };
     case 'GET_PLANETAS_ERROR':
       return { ...store, errorPlanetas: action.payload, loadingPlanetas: false };
-      
+
+      case 'LOADING_DETALLE_PLANETA':
+        return { ...store, loadingDetallePlaneta: true, errorDetallePlaneta: null };
+      case 'SET_PLANETA_DETALLE':
+        return { ...store, planetaDetalle: action.payload, loadingDetallePlaneta: false };
+      case 'ERROR_DETALLE_PLANETA':
+        return { ...store, errorDetallePlaneta: action.payload, loadingDetallePlaneta: false };
+
+    //------------------------------------------------------------------  
+
+
     case 'GET_NAVES_LOADING':
       return { ...store, loadingNaves: true, errorNaves: null };
     case 'GET_NAVES_SUCCESS':

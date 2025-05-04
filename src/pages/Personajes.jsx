@@ -22,7 +22,7 @@ function Personajes() {
 
   if (loading) return <div>Loading characters...</div>;
   if (error) return <div>Error: {error.message}</div>;
-  if (!personajes || personajes.length === 0) return <div>No characters available</div>;
+  if (!personajes || personajes.length === 0) return <div>No Characters Available</div>;
 
   return (
     <div>
