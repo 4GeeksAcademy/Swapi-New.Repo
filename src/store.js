@@ -17,7 +17,12 @@ export const initialStore = () => ({
   errorPlanetas: null,
   errorDetallePersonaje: null,
   errorDetalleNave: null,
-  errorDetallePlaneta: null
+  errorDetallePlaneta: null,
+  auth: {
+    token: null,
+    isAdmin: false,
+    username: ''
+  }
 });
 
 export default function storeReducer(store, action = {}) {
