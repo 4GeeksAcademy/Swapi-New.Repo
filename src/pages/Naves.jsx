@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GetNaves } from '../services/fetch';
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
+import "../styles/naves.css";
 
 import cr90 from '../assets/Naves/01-CR90.jpg';
 import starDestroyer from '../assets/Naves/02-Star Destroyer.jpg';
@@ -44,54 +45,29 @@ function Naves() {
     navigate(`/naves/${nave.uid}`);
   };
 
-  if (loading) return <div>Loading Your Transport...</div>;
-  if (error) return <div>Error: {error.message}</div>;
-  if (!naves || naves.length === 0) return <div>No Transport Available</div>;
+  if (loading) return <div className="loading-message">Loading Your Transport...</div>;
+  if (error) return <div className="error-message">Error: {error.message}</div>;
+  if (!naves || naves.length === 0) return <div className="empty-message">No Transport Available</div>;
 
   return (
-    <div style={{ padding: '20px' }}>
-      <h1 style={{ textAlign: 'center', marginBottom: '30px' }}>Star Wars Starships</h1>
+    <div className="naves-container">
+      <h1 className="naves-title">Star Wars Starships</h1>
       
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(5, 1fr)',
-        gap: '20px',
-        maxWidth: '1200px',
-        margin: '0 auto'
-      }}>
+      <div className="naves-grid">
         {naves.map((nave) => {
           const imageSrc = uidToImageMap[nave.uid] || "No Image Aviable";
           return (
             <div 
               key={nave.uid}
               onClick={() => handleClick(nave)}
-              style={{
-                cursor: 'pointer',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                padding: '15px',
-                borderRadius: '8px',
-                background: '#f0f0f0',
-                transition: 'transform 0.3s',
-                ':hover': {
-                  transform: 'scale(1.05)',
-                  boxShadow: '0 4px 8px rgba(0,0,0,0.2)'
-                }
-              }}
+              className="nave-card"
             >
               <img 
                 src={imageSrc} 
                 alt={nave.name || nave.properties?.name || 'Unknown Starship'}
-                style={{
-                  width: '180px',
-                  height: '120px',
-                  objectFit: 'cover',
-                  borderRadius: '4px',
-                  marginBottom: '10px'
-                }}
+                className="nave-image"
               />
-              <span style={{ textAlign: 'center', fontWeight: 'bold' }}>
+              <span className="nave-name">
                 {nave.name || nave.properties?.name || 'Unknown Starship'}
               </span>
             </div>

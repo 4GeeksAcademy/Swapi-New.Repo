@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GetPlanetas } from '../services/fetch';
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
+import "../styles/planetas.css";
 
 import tatooine from '../assets/Planetas/01-Tatooine.jpg';
 import alderaan from '../assets/Planetas/02-Alderaan.jpg';
@@ -44,59 +45,29 @@ function Planetas() {
     navigate(`/planetas/${planeta.uid}`);
   };
 
-  if (loading) return <div>Loading planets...</div>;
-  if (error) return <div>Error: {error.message}</div>;
-  if (!planetas || planetas.length === 0) return <div>The Galaxy Has Been Destroyed!</div>;
+  if (loading) return <div className="loading-message">Loading planets...</div>;
+  if (error) return <div className="error-message">Error: {error.message}</div>;
+  if (!planetas || planetas.length === 0) return <div className="empty-message">The Galaxy Has Been Destroyed!</div>;
 
   return (
-    <div style={{ padding: '20px' }}>
-      <h1 style={{ textAlign: 'center', marginBottom: '30px' }}>Star Wars Planets</h1>
+    <div className="planetas-container">
+      <h1 className="planetas-title">Star Wars Planets</h1>
       
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(5, 1fr)',
-        gap: '20px',
-        maxWidth: '1200px',
-        margin: '0 auto'
-      }}>
+      <div className="planetas-grid">
         {planetas.map((planeta) => {
           const imageSrc = uidToImageMap[planeta.uid] || tatooine;
           return (
             <div 
               key={planeta.uid}
               onClick={() => handleClick(planeta)}
-              style={{
-                cursor: 'pointer',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                padding: '15px',
-                borderRadius: '8px',
-                background: '#f0f0f0',
-                transition: 'transform 0.3s',
-                ':hover': {
-                  transform: 'scale(1.05)',
-                  boxShadow: '0 4px 8px rgba(0,0,0,0.2)'
-                }
-              }}
+              className="planeta-card"
             >
               <img 
                 src={imageSrc} 
                 alt={planeta.name || planeta.properties?.name || 'Unknown Planet'}
-                style={{
-                  width: '180px',
-                  height: '120px',
-                  objectFit: 'cover',
-                  borderRadius: '4px',
-                  marginBottom: '10px',
-                  boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-                }}
+                className="planeta-image"
               />
-              <span style={{ 
-                textAlign: 'center', 
-                fontWeight: 'bold',
-                color: '#333'
-              }}>
+              <span className="planeta-name">
                 {planeta.name || planeta.properties?.name || 'Unknown Planet'}
               </span>
             </div>
